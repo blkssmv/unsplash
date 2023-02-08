@@ -4,13 +4,13 @@
             <div class="search_input">
                 <div class="search_form">
                     <input
-                        @keyup.enter="searchAndShowPhotos"
+                        @keyup.enter="searchPhotosByName"
                         v-model="altPhoto" 
                         type="search" 
                         placeholder="Поиск" 
                     />
                 </div>
-                <div class="search_icon" @click="searchAndShowPhotos">
+                <div class="search_icon" @click="searchPhotosByName">
                     <img src="../assets/search.svg" alt="" />
                 </div>
             </div>
@@ -20,8 +20,6 @@
 
 <script>
 import axios from 'axios';
-
-
 export default {
     props: {
         randomPhoto: String,
@@ -35,26 +33,24 @@ export default {
         }
     },
     methods: {
-        searchPhotosByName(){
+        async searchPhotosByName(){
             try{
-                const response = axios.get(this.url + `/search/photos?client_id=${this.accessKey}`, {
+                axios.get(this.url + `/search/photos?client_id=${this.accessKey}`, {
                     params: {
                         query: this.altPhoto,
                         lang: 'ru' 
                     }
+                }).then(res => {
+                    this.searchedPhotos = res.data.results
+                    this.$emit('showSearchedPhotos', this.searchedPhotos)
                 })
-                this.searchedPhotos = response.data.results
             } catch (e){
                 console.log(e)
             }
         },
 
-        showSearchedPhotos(){
-            this.$emit('showSearchedPhotos', this.searchedPhotos)
-        },
         searchAndShowPhotos(){
             this.searchPhotosByName()
-            this.showSearchedPhotos()
         },
         
     },

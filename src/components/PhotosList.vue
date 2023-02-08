@@ -15,14 +15,6 @@ export default {
     props: {
         photos: Array
     },
-    // data(){
-    //     return{
-    //         photos: [
-    //             {id: 1, urls: {full: 'https://tengrinews.kz/userdata/news/2023/news_489294/resize/photo_419700.jpeg'}},
-    //             {id: 2, urls: {full: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwA_EkKzqjd86mW_D5pOdnGjHR6jetYw7xTw&usqp=CAU'}}
-    //         ]
-    //     }
-    // },
     components: { PhotoItem }
 }
 
@@ -41,7 +33,7 @@ export default {
     align-items: center;
     justify-content: center;
     max-width: 473px;
-    max-height: 440px;
+    height: 440px;
     border-radius: 8px;
     cursor: pointer;
     transition: all .2s ease;
@@ -56,7 +48,7 @@ export default {
     }
     .photo{
         max-width: 100%;
-        max-height: 100%;
+        height: 380px;
     }
 }
 @media (max-width: 768px){
@@ -65,7 +57,7 @@ export default {
     }
     .photo{
         max-width: 100%;
-        max-height: 100%;
+        height: 320px;
     }
 }
 
