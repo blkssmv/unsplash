@@ -1,14 +1,126 @@
-*{
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-a{
+
+a {
   color: #fff;
   text-decoration: none;
 }
-.container{
+
+.container {
   max-width: 1920px;
   margin: 0 auto;
   padding: 0 220px;
+}
+
+.homePage {}
+
+.homePage .searchBlock {
+  padding: 92px 0;
+  background-image: url("/public/background_search.png");
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 16px solid gray;
+  margin-bottom: 114px;
+}
+
+.homePage .searchBlock .searchInput {
+  max-width: 1920px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 220px;
+  width: 100%;
+  height: 70px;
+}
+
+.homePage .searchBlock .searchInput input {
+  width: 100%;
+  height: 100%;
+  padding: 21px 39px;
+  color: #000;
+  font-family: Roboto;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  border: none;
+}
+
+.homePage .searchBlock .searchInput input:focus {
+  outline: none;
+}
+
+.homePage .searchBlock .searchInput input::placeholder {
+  color: #000;
+  font-family: Roboto;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+.homePage .images {
+  display: flex;
+
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.homePage .images .image{
+  width: 30%;
+  height: 450px;
+  margin: 13.5px;
+  border-radius: 8px;
+}
+.homePage .images .image img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+
+
+@media screen and (max-width: 1440px) {
+  .container{
+    padding: 0 100px;
+  }
+  .homePage .searchBlock .searchInput{
+    padding: 0 100px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .container{
+    padding: 0 75px;
+  }
+  .homePage .searchBlock .searchInput{
+    padding: 0 75px;
+  }
+  .homePage .images .image{
+    width: 45%;
+    height: 350px;
+    margin: 10px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .container{
+    padding: 0 21px;
+  }
+  .homePage .searchBlock .searchInput{
+    padding: 0 21px;
+  }
+  .homePage .searchBlock{
+    padding: 80px 0;
+  }
+  .homePage .images .image{
+    width: 100%;
+    height: 311px;
+    margin: 10px;
+  }
 }

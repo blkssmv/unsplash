@@ -2,18 +2,18 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Favourites from "./pages/Favourites";
 import Home from "./pages/Home";
-import Header from "./components/HeaderComponent/Header";
+import HomePageHeader from "./components/HeaderComponent/HomePageHeader";
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <div className="container">
+      <HomePageHeader />
+      
         <Routes>
           <Route path="/" exact element={<Home />} />
           <Route path="/favourites" element={<Favourites />} />
         </Routes>
-      </div>
+      
     </div>
   );
 }
