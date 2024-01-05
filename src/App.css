@@ -82,6 +82,22 @@ a {
   object-fit: cover;
   border-radius: 8px;
 }
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  padding: 20px;
+}
+
+.loader img {
+  animation: spin 3s infinite linear; /* Анимация вращения */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 
 
