@@ -25,7 +25,7 @@
     align-items: center;
 }
 
-.link img {
+.link svg, .link img {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -41,6 +41,14 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+.actions{
+    display: flex;
+    align-items: center;
+    gap: 38px;
+}
+.actions .link img svg path{
+    fill: red!important
 }
 
 @media screen and (max-width: 1440px){
@@ -68,7 +76,7 @@
     .header_container{
         padding: 0 21px;
     }
-    .link .favourites_title{
+    .link span{
         display: none;
     }
 }

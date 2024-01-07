@@ -1,8 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import "../App.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
+import HomePageHeader from "../components/HeaderComponent/HomePageHeader";
 
 export default function Home() {
   const [images, setImages] = useState([]);
@@ -12,60 +14,50 @@ export default function Home() {
 
   const secretKey = "uiJYSyirQVQhGRoJ5zK5mjUFjalx0Ut2t1XUQ_Imf44";
 
-  const fetchImages = useCallback(async () => {
+  const fetchImages = async () => {
+    setLoading(true);
+    const baseUrl = searchQuery
+      ? `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&page=${page}`
+      : `https://api.unsplash.com/photos?page=${page}`;
+    const url = `${baseUrl}&client_id=${secretKey}`;
+
     try {
-      setLoading(true);
-
-      // Раскомментируйте это поле для имитации задержки загрузки с использованием setTimeout
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      const response = await axios.get(
-        `https://api.unsplash.com/search/photos/?client_id=${secretKey}&page=${page}&query=${searchQuery}`
-      );
-
-      if (page === 1) {
-        // Если это первая страница, устанавливаем новый результат поиска
-        setImages(response.data.results);
-      } else {
-        // Если это не первая страница, добавляем результаты к предыдущим изображениям
-        setImages((prevImages) => [...prevImages, ...response.data.results]);
-      }
-
-      return response;
+      const response = await axios.get(url);
+      const newImages = searchQuery ? response.data.results : response.data;
+      setImages(prev => (page === 1 ? newImages : [...prev, ...newImages]));
     } catch (error) {
-      toast.error("Упс... Ошибка! Посмотрите в консоль.");
+      toast.error("Упс! Ошибка... Проверьте консоль.");
     } finally {
       setLoading(false);
     }
-  }, [page, searchQuery]);
+  };
+
+  const handleSearch = () => {
+    setPage(1);
+    setImages([]);
+    fetchImages();
+  };
 
   const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop ===
-      document.documentElement.offsetHeight
-    ) {
-      setPage((prevPage) => prevPage + 1);
+    if (window.innerHeight + document.documentElement.scrollTop
+        === document.documentElement.offsetHeight) {
+      setPage(prevPage => prevPage + 1);
     }
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    fetchImages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   useEffect(() => {
-    // Сбросить страницу при изменении поискового запроса
-    setPage(1);
-
-    // Запустить fetchImages после сброса страницы
-    fetchImages();
-  }, [searchQuery, fetchImages]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="homePage">
+      <HomePageHeader />
       <ToastContainer />
       <div className="searchBlock">
         <div className="searchInput">
@@ -74,15 +66,16 @@ export default function Home() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
+          <img onClick={handleSearch} src="./search.svg" alt="search"/>
         </div>
       </div>
 
       <div className="container">
         <div className="images">
           {images.map((image) => (
-            <div className="image" key={image.id}>
+            <Link to={`/image/${image.id}`} className="image" key={image.id}>
               <img src={image.urls.regular} alt={image.alt_description} />
-            </div>
+            </Link>
           ))}
         </div>
         {loading && (
