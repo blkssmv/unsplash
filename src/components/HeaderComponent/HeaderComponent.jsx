@@ -1,8 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import styles from "./HomePageHeader.module.css";
+import { Link, useLocation } from "react-router-dom";
+import styles from "./HeaderComponent.module.css";
 
-export default function HomePageHeader({ hasSearch = false }) {
+export default function HomePageHeader() {
+  const location = useLocation()
+  const hasSearchButton = location.pathname.includes("favourites") || location.pathname.includes("image")
+  
   return (
     <div className={styles.header}>
       <div className={styles.header_container}>
@@ -13,7 +16,7 @@ export default function HomePageHeader({ hasSearch = false }) {
         </div>
 
         <div className={styles.actions}>
-          {hasSearch && (
+          {hasSearchButton && (
             <Link to={"/"} className={styles.link}>
               <svg
                 width="23"

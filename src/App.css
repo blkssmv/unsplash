@@ -17,7 +17,18 @@ a {
   padding: 0 220px;
 }
 
-.homePage {}
+.homePage {
+  position: relative;
+}
+.homePage .button_top{
+  cursor: pointer;
+  right: 113px;
+  bottom: 71px;
+  position: fixed;
+  display: flex;
+  width: 49px;
+  height: 49px;
+}
 
 .homePage .searchBlock {
   padding: 92px 0;
@@ -76,21 +87,21 @@ a {
   line-height: normal;
 }
 
-.homePage .images {
+.images {
   display: flex;
 
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-.homePage .images .image {
+.images .image {
   width: 30%;
   height: 450px;
   margin: 13.5px;
   border-radius: 8px;
 }
 
-.homePage .images .image img {
+.images .image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -107,7 +118,6 @@ a {
 
 .loader img {
   animation: spin 3s infinite linear;
-  /* Анимация вращения */
 }
 
 @keyframes spin {
@@ -218,6 +228,9 @@ a {
   gap: 16px;
   background-color: #FFF200;
 }
+.actions_download a{
+  color: #000;
+}
 .actions_download button img{
   border-radius: 0;
 }
@@ -233,6 +246,11 @@ a {
   width: 100%;
   height: 100%;
 }
+.favourites_title{
+  display: flex;
+  justify-content: center;
+  margin: 94px 0;
+}
 
 @media screen and (max-width: 1440px) {
   .container {
@@ -246,6 +264,12 @@ a {
   .homePage .searchBlock .searchInput img {
     margin: 0 120px;
   }
+  .favourites_title{
+    margin: 75px 0;
+  }
+  .homePage .button_top{
+    display: none;
+  }
 }
 
 @media screen and (max-width: 991px) {
@@ -257,7 +281,7 @@ a {
     padding: 0 75px;
   }
 
-  .homePage .images .image {
+  .images .image {
     width: 45%;
     height: 350px;
     margin: 10px;
@@ -286,6 +310,7 @@ a {
   .actions_download button{
     padding: 12px;
   }
+  .actions_download a,
   .actions_download span{
     display: none;
   }
@@ -294,6 +319,9 @@ a {
   }
   .author_login{
     color: #BDBDBD;
+  }
+  .favourites_title{
+    margin: 50px 0;
   }
 }
 
@@ -310,7 +338,7 @@ a {
     padding: 80px 0;
   }
 
-  .homePage .images .image {
+  .images .image {
     width: 100%;
     height: 311px;
     margin: 10px;
@@ -321,5 +349,8 @@ a {
   }
   .imageDetailPage_mainImage{
     height: 227px;
+  }
+  .favourites_title{
+    margin: 40px 0;
   }
 }

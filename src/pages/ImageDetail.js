@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import HomePageHeader from "../components/HeaderComponent/HomePageHeader";
+import HeaderComponent from "../components/HeaderComponent/HeaderComponent";
 
 export default function ImageDetail() {
   const { id } = useParams();
   const [imageData, setImageData] = useState(null);
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(true);
+
 
   const clientKey = "uiJYSyirQVQhGRoJ5zK5mjUFjalx0Ut2t1XUQ_Imf44";
 
@@ -20,6 +21,9 @@ export default function ImageDetail() {
           `https://api.unsplash.com/photos/${id}?client_id=${clientKey}`
         );
         setImageData(response.data);
+
+        const isLiked = localStorage.getItem(`liked_${id}`);
+        setLiked(!!isLiked);
       } catch (error) {
         toast.error("Ошибка: ", error);
       } finally {
@@ -30,32 +34,30 @@ export default function ImageDetail() {
     if (id) {
       fetchImageData();
     }
-
-    // const isLiked = localStorage.getItem(`liked_${id}`) === "true";
-    // setLiked(isLiked);
   }, [id]);
 
   const handleLikeClick = () => {
     const newLikedStatus = !liked;
     setLiked(newLikedStatus);
-  
+
     if (newLikedStatus) {
-      // Save the entire image data
       localStorage.setItem(`liked_${id}`, JSON.stringify(imageData));
     } else {
-      // Remove the image data from localStorage
       localStorage.removeItem(`liked_${id}`);
     }
   };
 
   if (loading) {
-    return <div>Загрузка...</div>;
+    return (
+      <div className="loader">
+        <img src="/loader.svg" alt="loader" />
+      </div>
+    );
   }
-  
 
   return (
     <div>
-      <HomePageHeader hasSearch={id !== undefined} />
+      <HeaderComponent />
       <div className="imageDetailPage">
         <div className="container">
           <div className="imageDetailPage_header">
@@ -93,10 +95,11 @@ export default function ImageDetail() {
                 </button>
               </div>
               <div className="actions_download">
-              
                 <button>
                   <img src="/download.svg" alt="download" />
-                  <span>Download</span>
+                  <a href={imageData.links.download} target="_blank" rel="noreferrer" download>
+                    <span>Скачать</span>
+                  </a>
                 </button>
               </div>
             </div>

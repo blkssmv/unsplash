@@ -79,4 +79,7 @@
     .link span{
         display: none;
     }
+    .actions{
+        gap: 15px;
+    }
 }

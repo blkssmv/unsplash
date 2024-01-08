@@ -4,7 +4,7 @@ import "../App.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
-import HomePageHeader from "../components/HeaderComponent/HomePageHeader";
+import HeaderComponent from "../components/HeaderComponent/HeaderComponent";
 
 export default function Home() {
   const [images, setImages] = useState([]);
@@ -12,19 +12,21 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const secretKey = "uiJYSyirQVQhGRoJ5zK5mjUFjalx0Ut2t1XUQ_Imf44";
+  const secretKey = "uiJYSyirQVQhGRoJ5zK5mjUFjalx0Ut2t1XUQ_Imf44"; // * Ваш секретный ключ на странице unsplash.com
 
   const fetchImages = async () => {
     setLoading(true);
     const baseUrl = searchQuery
-      ? `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&page=${page}`
+      ? `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+          searchQuery
+        )}&page=${page}`
       : `https://api.unsplash.com/photos?page=${page}`;
     const url = `${baseUrl}&client_id=${secretKey}`;
 
     try {
       const response = await axios.get(url);
       const newImages = searchQuery ? response.data.results : response.data;
-      setImages(prev => (page === 1 ? newImages : [...prev, ...newImages]));
+      setImages((prev) => (page === 1 ? newImages : [...prev, ...newImages]));
     } catch (error) {
       toast.error("Упс! Ошибка... Проверьте консоль.");
     } finally {
@@ -39,9 +41,11 @@ export default function Home() {
   };
 
   const handleScroll = () => {
-    if (window.innerHeight + document.documentElement.scrollTop
-        === document.documentElement.offsetHeight) {
-      setPage(prevPage => prevPage + 1);
+    if (
+      window.innerHeight + document.documentElement.scrollTop ===
+      document.documentElement.offsetHeight
+    ) {
+      setPage((prevPage) => prevPage + 1);
     }
   };
 
@@ -54,11 +58,20 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
 
   return (
     <div className="homePage">
-      <HomePageHeader />
+      <HeaderComponent />
       <ToastContainer />
+      <div className="button_top" onClick={handleScrollToTop}>
+        <img src="/button_top.svg" alt="button_top" />
+      </div>
       <div className="searchBlock">
         <div className="searchInput">
           <input
@@ -66,7 +79,7 @@ export default function Home() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <img onClick={handleSearch} src="./search.svg" alt="search"/>
+          <img onClick={handleSearch} src="./search.svg" alt="search" />
         </div>
       </div>
 
