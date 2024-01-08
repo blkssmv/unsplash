@@ -11,14 +11,11 @@ export default function ImageDetail() {
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(true);
 
-
-  const clientKey = "uiJYSyirQVQhGRoJ5zK5mjUFjalx0Ut2t1XUQ_Imf44";
-
   useEffect(() => {
     const fetchImageData = async () => {
       try {
         const response = await axios.get(
-          `https://api.unsplash.com/photos/${id}?client_id=${clientKey}`
+          `${process.env.REACT_APP_UNSPLASH_API}/photos/${id}?client_id=${process.env.REACT_APP_UNSPLASH_ACCESS_KEY}`
         );
         setImageData(response.data);
 

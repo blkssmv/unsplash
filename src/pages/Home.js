@@ -12,16 +12,15 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const secretKey = "uiJYSyirQVQhGRoJ5zK5mjUFjalx0Ut2t1XUQ_Imf44"; // * Ваш секретный ключ на странице unsplash.com
 
   const fetchImages = async () => {
     setLoading(true);
     const baseUrl = searchQuery
-      ? `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+      ? `${process.env.REACT_APP_UNSPLASH_API}/search/photos?query=${encodeURIComponent(
           searchQuery
         )}&page=${page}`
-      : `https://api.unsplash.com/photos?page=${page}`;
-    const url = `${baseUrl}&client_id=${secretKey}`;
+      : `${process.env.REACT_APP_UNSPLASH_API}/photos?page=${page}`;
+    const url = `${baseUrl}&client_id=${process.env.REACT_APP_UNSPLASH_ACCESS_KEY}`;
 
     try {
       const response = await axios.get(url);
